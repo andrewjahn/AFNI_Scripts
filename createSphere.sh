@@ -8,7 +8,7 @@ display_usage() {
 		1) The size of the radius of the sphere;
 		2) A master dataset, which determines the dimensions and voxel resolution of the ROI;
 		3-5) X, Y, and Z coordinates (assumed to be MNI and in LPI orientation);
-		6) A label for ROI"
+		6) A label for the ROI"
 	}
 
 	if [ $# -le 5 ]
