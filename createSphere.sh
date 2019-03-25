@@ -38,7 +38,7 @@ echo $X $Y $Z | 3dUndump -prefix $OUTPUT -srad $SRAD -orient LPI -master $MASTER
 # Extract the timeseries from the ROI #
 #######################################
 
-3dmaskave -quiet -mask $OUTPUT $MASTER > ${OUTPUT}_TimeSeries.txt
+3dmaskave -quiet -mask ${OUTPUT}+tlrc $MASTER > ${OUTPUT}_TimeSeries.txt
 
 #Examines the timeseries using 1dplot
 
@@ -53,4 +53,4 @@ echo $X $Y $Z | 3dUndump -prefix $OUTPUT -srad $SRAD -orient LPI -master $MASTER
 
 #Converts the correlation map to a z-map
 
-3dcalc -a ${OUTPUT}_corr -expr 'atanh(a)' -prefix ${OUTPUT}_corr_r2z
+3dcalc -a ${OUTPUT}_corr+tlrc -expr 'atanh(a)' -prefix ${OUTPUT}_corr_r2z
