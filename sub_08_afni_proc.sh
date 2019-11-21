@@ -8,7 +8,7 @@ set subj  = sub_08
 set gname = Flanker
 
 # set data directories
-set top_dir = /Users/ajahn/Desktop/${gname}/sub-08
+set top_dir = ${PWD}/sub-08
 set anat_dir  = $top_dir/anat
 set epi_dir   = $top_dir/func
 set stim_dir  = $top_dir/func
