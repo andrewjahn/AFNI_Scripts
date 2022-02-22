@@ -1,0 +1,36 @@
+#!/usr/bin/env tcsh
+
+# created by uber_subject.py: version 0.37 (April 14, 2015)
+# creation date: Tue Mar 22 11:56:09 2016
+
+# set data directories
+set top_dir = $PWD
+
+# set subject and group identifiers
+set subj      = $1
+set group_id  = ToneCounting
+
+# run afni_proc.py to create a single subject processing script
+afni_proc.py -subj_id $subj                                      \
+        -script proc.$subj -scr_overwrite                        \
+        -blocks tshift align tlrc volreg blur mask scale regress \
+        -copy_anat $top_dir/anat/${subj}_T1w.nii.gz                    \
+        -tcat_remove_first_trs 0                                 \
+        -dsets $top_dir/func/${subj}_task-tonecounting_bold.nii.gz     \
+        -volreg_align_to third                                   \
+        -volreg_align_e2a                                        \
+        -volreg_tlrc_warp                                        \
+        -blur_size 4.0                                           \
+        -regress_stim_times                                      \
+            $top_dir/func/tone_counting_onset_times.txt               \
+            $top_dir/func/tone_counting_probe_onsets.txt              \
+        -regress_stim_labels                                     \
+            tone_counting probe                                  \
+        -regress_basis_multi                                     \
+            'TENT(0,12,7)' 'TENT(0,14,8)'                        \
+        -regress_censor_motion 0.3                               \
+        -regress_make_ideal_sum sum_ideal.1D                     \
+        -regress_run_clustsim no                                \
+        -html_review_style none
+
+tcsh -xef proc.$subj |& tee output.proc.$subj
