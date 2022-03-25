@@ -253,7 +253,7 @@ end
 # ---- create group anatomy mask, mask_group+tlrc ----
 #      (resampled from tlrc base anat, MNI_avg152T1+tlrc)
 3dresample -master full_mask.$subj+tlrc -prefix ./rm.resam.group      \
-           -input /Users/ajahn/abin/MNI_avg152T1+tlrc
+           -input /Users/${USER}/abin/MNI_avg152T1+tlrc
 
 # convert to binary group mask; fill gaps and holes
 3dmask_tool -dilate_input 5 -5 -fill_holes -input rm.resam.group+tlrc \
