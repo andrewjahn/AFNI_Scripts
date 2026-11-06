@@ -68,6 +68,7 @@ set tr_counts = ( 146 146 )
 
 # -------------------------------------------------------
 # enter the results directory (can begin processing data)
+cp AFNI_Scripts/MNI152_2009_template.nii.gz $output_dir
 cd $output_dir
 
 
@@ -121,7 +122,7 @@ align_epi_anat.py -anat2epi -anat {$subj}_T1w+orig \
 
 # ================================== tlrc ==================================
 # warp anatomy to standard space
-@auto_tlrc -base MNI_avg152T1+tlrc -input {$subj}_T1w_ns+orig -init_xform AUTO_CENTER -no_ss
+@auto_tlrc -base MNI152_2009_template.nii.gz -input {$subj}_T1w_ns+orig -init_xform AUTO_CENTER -no_ss
 
 # store forward transformation matrix in a text file
 cat_matvec {$subj}_T1w_ns+tlrc::WARP_DATA -I > warp.anat.Xat.1D
@@ -253,7 +254,7 @@ end
 # ---- create group anatomy mask, mask_group+tlrc ----
 #      (resampled from tlrc base anat, MNI_avg152T1+tlrc)
 3dresample -master full_mask.$subj+tlrc -prefix ./rm.resam.group      \
-           -input /Users/${USER}/abin/MNI_avg152T1+tlrc
+           -input MNI152_2009_template.nii.gz
 
 # convert to binary group mask; fill gaps and holes
 3dmask_tool -dilate_input 5 -5 -fill_holes -input rm.resam.group+tlrc \
